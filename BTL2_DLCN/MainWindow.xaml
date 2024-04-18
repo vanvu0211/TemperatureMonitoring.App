@@ -1,0 +1,473 @@
+﻿<Window x:Class="BTL2_DLCN.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BTL2_DLCN"
+        mc:Ignorable="d" 
+        xmlns:components="clr-namespace:BTL2_DLCN.Resources.Components"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        xmlns:prism="http://prismlibrary.com/"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel}"
+        WindowStartupLocation="CenterScreen"  
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
+        Title="BLT2_DLCN" Height="900" Width="1650">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <!--CONNECT-->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Column="0" Margin="10,10,10,10" Padding="10" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock  Padding="10" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Connecting" Style="{StaticResource CardTitle}"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1"
+Text="Port:"
+Style="{StaticResource FieldLabel}"
+Margin="10"
+VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="1" Grid.Row="1"
+materialDesign:HintAssist.Hint="Port"
+Style="{StaticResource ComboBox}"
+Margin="10"
+ItemsSource="{Binding PortNames}"
+Text="{Binding PortName}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <TextBlock Grid.Column="0" Grid.Row="2"
+Text="BaudRate:"
+Style="{StaticResource FieldLabel}"
+Margin="10"
+VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="1" Grid.Row="2"
+materialDesign:HintAssist.Hint="BaudRate"
+Style="{StaticResource ComboBox}"
+Margin="10"
+ItemsSource="{Binding BaudRates}"
+Text="{Binding BaudRate}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <TextBlock Grid.Column="0" Grid.Row="3"
+Text="Status:"
+Style="{StaticResource FieldLabel}"
+Margin="10"
+VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3"
+Text="{Binding Status}" FontWeight="Bold" 
+Style="{StaticResource FieldLabel}"
+Margin="10" Foreground="{Binding StatusColor}"
+VerticalAlignment="Center"/>
+                    <Button Grid.Column="0"
+                            Grid.ColumnSpan="2"
+         Grid.Row="4"
+Margin="10" IsEnabled="{Binding IsDisconnect}"
+Width="200" Command="{Binding ConnectCommand}"
+Style="{StaticResource ButtonPrimary}"
+materialDesign:ButtonAssist.CornerRadius="10"
+Content="Connect">
+                        <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <prism:InvokeCommandAction Command="{Binding ConnectCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+                    </Button>
+                    <Button Grid.Column="0"
+                            Grid.ColumnSpan="2"
+         Grid.Row="5"
+Margin="10" IsEnabled="{Binding IsConnect}"
+Width="200"  Command="{Binding DisconnectCommand}"
+Style="{StaticResource ButtonPrimary}"
+materialDesign:ButtonAssist.CornerRadius="10"
+Content="Disconnect">
+                        <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <prism:InvokeCommandAction Command="{Binding DisconnectCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+                    </Button>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="1" Margin="10,10,10,10" Padding="10" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock  Padding="10" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Report" Style="{StaticResource CardTitle}"/>
+                    <Grid Grid.Row="1" Margin="10" HorizontalAlignment="Center" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0"
+Text="Sample Time:" 
+Style="{StaticResource FieldLabel}"
+
+VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4"
+Text="Custom Time:" 
+Style="{StaticResource FieldLabel}"
+
+VerticalAlignment="Center"/>
+                        <RadioButton IsChecked="{Binding EnableTimer5s, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="10" ></RadioButton>
+                        <RadioButton IsChecked="{Binding EnableTimer10s, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10" ></RadioButton>
+                        <RadioButton IsChecked="{Binding EnableTimer30s, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="10"  ></RadioButton>
+                        <RadioButton IsChecked="{Binding EnableTimer1m, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Margin="10" ></RadioButton>
+                        <RadioButton IsChecked="{Binding EnableTimerCustom, Mode=TwoWay}" Grid.Row="44" Grid.Column="1" Margin="10" ></RadioButton>
+                        <TextBlock Grid.Column="2" Grid.Row="0"
+                        Text="5 Seconds" Foreground="{Binding StausColor5sTimer}"
+                        Style="{StaticResource FieldLabel}"
+                        
+                        VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.Row="1"
+Text="10 Seconds" Foreground="{Binding StausColor10sTimer}"
+Style="{StaticResource FieldLabel}"
+
+VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.Row="2"
+Text="30 Seconds" Foreground="{Binding StausColor30sTimer}"
+Style="{StaticResource FieldLabel}"
+
+VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.Row="3"
+Text="1 Minutes" Foreground="{Binding StausColor1mTimer}"
+Style="{StaticResource FieldLabel}"
+
+VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="2">
+                            <TextBox Grid.Column="2" Width="40"
+FontSize="16"  FontWeight="Bold"
+VerticalAlignment="Center" Foreground="{Binding StausColorCustomTimer}"
+Text="{Binding TimerCustom, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Grid.Column="1" Grid.Row="4"
+Text=" Seconds" Foreground="{Binding StausColorCustomTimer}"
+Style="{StaticResource FieldLabel}" 
+
+VerticalAlignment="Center"/>
+                        </StackPanel>
+
+
+                    </Grid>
+                    <Button Grid.Column="0"
+                            Grid.ColumnSpan="2"
+         Grid.Row="4"
+Margin="10"
+Width="200" Command="{Binding LogDataCommand}" IsEnabled="{Binding IsLogData}"
+Style="{StaticResource ButtonPrimary}"
+materialDesign:ButtonAssist.CornerRadius="10"
+Content="Log Data">
+                        
+                    </Button>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+
+        <!--DATA-->
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,438,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0" Margin="10" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Margin="10" Background="LightGray" CornerRadius="10">
+                        <TextBlock  Padding="10" Grid.Row="0" Text="Sensor 1" Style="{StaticResource CardTitle}"/>
+                    </Border>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Padding="10" Margin="10" CornerRadius="10" Grid.Column="2" BorderThickness="3" BorderBrush="Black">
+                            <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                </Grid.RowDefinitions>
+
+
+
+                                <TextBlock Grid.Column="0" Grid.Row="0"
+Text="Hight ThreshHold"
+Style="{StaticResource CardTitle}" FontSize="18"
+Margin="10"
+VerticalAlignment="Center"/>
+                                <components:Indicator State="{Binding AlarmHightThreshHoldSensor1}" OnColor="{Binding ColorAlarmHightThreshHoldSensor1}"  Height="35" Width="35" Grid.Row="0" Margin="10" Grid.Column="1"/>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="1">
+
+                                    <TextBlock Grid.Column="0" Grid.Row="1"
+Text="Value:"
+Style="{StaticResource FieldLabel}"
+Margin="10"                                           
+VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="1" Width="40"
+FontSize="16" Margin=" 10"
+VerticalAlignment="Center"
+Text="{Binding HightThreshHoldSensor1, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <Grid Grid.Row="2" Grid.ColumnSpan="3">
+                                    <Separator Margin="5"/>
+                                </Grid>
+
+                                <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3"
+Text="Low ThreshHold"
+Style="{StaticResource CardTitle}" FontSize="18"
+Margin="10"
+VerticalAlignment="Center"/>
+                                <components:Indicator  Margin="10"  State="{Binding AlarmLowThreshHoldSensor1}" OnColor="{Binding ColorAlarmLowThreshHoldSensor1}" Height="35" Width="35" Grid.Row="3" Grid.Column="1"/>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="4">
+
+                                    <TextBlock Grid.Column="0" Grid.Row="1"
+Text="Value:"
+Style="{StaticResource FieldLabel}"
+Margin="10"                                           
+VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="1" Width="40"
+FontSize="16" Margin=" 10"
+VerticalAlignment="Center"
+Text="{Binding LowThreshHoldSensor1, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <Grid Grid.Row="5" Grid.ColumnSpan="3">
+                                    <Separator Margin="5"/>
+                                </Grid>
+                                <StackPanel Orientation="Horizontal" Grid.Row="6">
+
+                                    <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="5"
+Text="Enable Alarm:"
+Style="{StaticResource CardTitle}" FontSize="18"
+Margin="10 0 10 10"
+VerticalAlignment="Center"/>
+                                    <CheckBox IsChecked="{Binding EnableAlarm1, Mode=TwoWay}"  Margin="0 10"></CheckBox>
+                                </StackPanel>
+
+
+
+
+                            </Grid>
+                        </Border>
+
+                        <!--<Border BorderBrush="Black" BorderThickness="3" Margin="10" CornerRadius="10" Grid.Column="0" >
+                            
+                        </Border>-->
+                        <Border BorderBrush="Black" BorderThickness="3" Margin="10" CornerRadius="10" Grid.Column="0" >
+                            <lvc:CartesianChart Grid.Column="1" 
+    SyncContext="{Binding Sync}"
+    Series="{Binding Series3}"
+    XAxes="{Binding XAxes}">
+                            </lvc:CartesianChart>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="1" Margin="10" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Margin="10" Background="LightGray" CornerRadius="10">
+                        <TextBlock  Padding="10" Grid.Row="0" Text="Sensor 2" Style="{StaticResource CardTitle}"/>
+                    </Border>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Padding="10" Margin="10" CornerRadius="10" Grid.Column="2" BorderThickness="3" BorderBrush="Black">
+                            <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                    <RowDefinition Height=" auto"/>
+                                </Grid.RowDefinitions>
+
+
+
+                                <TextBlock Grid.Column="0" Grid.Row="0"
+Text="Hight ThreshHold"
+Style="{StaticResource CardTitle}" FontSize="18"
+Margin="10"
+VerticalAlignment="Center"/>
+                                <components:Indicator State="{Binding AlarmHightThreshHoldSensor2}" OnColor="{Binding ColorAlarmHightThreshHoldSensor2}"  Height="35" Width="35" Grid.Row="0" Margin="10" Grid.Column="1"/>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="1">
+
+                                    <TextBlock Grid.Column="0" Grid.Row="1"
+Text="Value:"
+Style="{StaticResource FieldLabel}"
+Margin="10"                                           
+VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="1" Width="40"
+FontSize="16" Margin=" 10"
+VerticalAlignment="Center"
+Text="{Binding HightThreshHoldSensor2, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <Grid Grid.Row="2" Grid.ColumnSpan="3">
+                                    <Separator Margin="5"/>
+                                </Grid>
+
+                                <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3"
+Text="Low ThreshHold"
+Style="{StaticResource CardTitle}" FontSize="18"
+Margin="10"
+VerticalAlignment="Center"/>
+                                <components:Indicator  Margin="10"  State="{Binding AlarmLowThreshHoldSensor2}" OnColor="{Binding ColorAlarmLowThreshHoldSensor2}" Height="35" Width="35" Grid.Row="3" Grid.Column="1"/>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="4">
+
+                                    <TextBlock Grid.Column="0" Grid.Row="1"
+Text="Value:"
+Style="{StaticResource FieldLabel}"
+Margin="10"                                           
+VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="1" Width="40"
+FontSize="16" Margin=" 10"
+VerticalAlignment="Center" 
+Text="{Binding LowThreshHoldSensor2, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <Grid Grid.Row="5" Grid.ColumnSpan="3">
+                                    <Separator Margin="5"/>
+                                </Grid>
+                                <StackPanel Orientation="Horizontal" Grid.Row="6">
+
+                                    <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="5"
+Text="Enable Alarm:"
+Style="{StaticResource CardTitle}" FontSize="18"
+Margin="10 0 10 10"
+VerticalAlignment="Center"/>
+                                    <CheckBox IsChecked="{Binding EnableAlarm2, Mode=TwoWay}" Margin="0 10"></CheckBox>
+                                </StackPanel>
+
+
+
+
+                            </Grid>
+                        </Border>
+
+                        <!--<Border BorderBrush="Black" BorderThickness="3" Margin="10" CornerRadius="10" Grid.Column="0" >
+                            
+                        </Border>-->
+                        <Border BorderBrush="Black" BorderThickness="3" Margin="10" CornerRadius="10" Grid.Column="0" >
+                            <lvc:CartesianChart Grid.Column="1" 
+    SyncContext="{Binding Sync2}"
+    Series="{Binding Series4}"
+    XAxes="{Binding XAxes2}">
+                            </lvc:CartesianChart>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0" Margin="10" Padding="10">
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <lvc:PieChart  Grid.Column="1"
+Grid.Row="0"
+Series="{Binding Series}" 
+VisualElements="{Binding VisualElements}"
+InitialRotation="-225"
+MaxAngle="270"
+MinValue="0"
+MaxValue="200">
+                    </lvc:PieChart>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
+                        <TextBlock   Padding="10 10 0 10" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Temperature Sensor 1:" Style="{StaticResource CardTitle}"/>
+                        <TextBlock Width="80"  Padding="10" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Value1}" Style="{StaticResource CardTitle}"/>
+                        <TextBlock  Padding="0 10 10 10" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="°C" Style="{StaticResource CardTitle}"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="1" Margin="10" Padding="10">
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <lvc:PieChart  Grid.Column="1"
+Grid.Row="0"
+Series="{Binding Series2}" 
+VisualElements="{Binding VisualElements}"
+InitialRotation="-225"
+MaxAngle="270"
+MinValue="0"
+MaxValue="200">
+                    </lvc:PieChart>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
+                        <TextBlock   Padding="10 10 0 10" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Temperature Sensor 2:" Style="{StaticResource CardTitle}"/>
+                        <TextBlock Width="80"  Padding="10" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Value2}" Style="{StaticResource CardTitle}"/>
+                        <TextBlock  Padding="0 10 10 10" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="°C" Style="{StaticResource CardTitle}"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+
+    </Grid>
+</Window>
